@@ -163,53 +163,27 @@ Upload to GitHub Pages for free hosting.
 ## JAVASCRIPT
 
 ```
-    document.addEventListener("DOMContentLoaded", () => {
-        const taskInput = document.getElementById("task-input");
-        const addTaskBtn = document.getElementById("add-task-btn");
-        const taskList = document.getElementById("task-list");
-    
-        addTaskBtn.addEventListener("click", () => {
-        const taskText = taskInput.value.trim();
-        if (taskText === "") {
-            alert("Please enter a task.");
-            return;
-        }
-        addTask(taskText);
-        taskInput.value = "";
-        });
-    
-        // Add task element
-        function addTask(text) {
-        const li = document.createElement("li");
-    
-        const span = document.createElement("span");
-        span.textContent = text;
-    
-        const actions = document.createElement("div");
-        actions.className = "task-actions";
-    
-        const completeBtn = document.createElement("button");
-        completeBtn.textContent = "✓";
-        completeBtn.classList.add("complete-btn");
-        completeBtn.addEventListener("click", () => {
-            li.classList.toggle("completed");
-        });
-    
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "🗑";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", () => {
-            taskList.removeChild(li);
-        });
-    
-        actions.appendChild(completeBtn);
-        actions.appendChild(deleteBtn);
-    
-        li.appendChild(span);
-        li.appendChild(actions);
-        taskList.appendChild(li);
-        }
-    });
+function addTask() {
+  const input = document.getElementById("taskInput");
+  const taskText = input.value.trim();
+  if (!taskText) return;
+
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <span onclick="toggleComplete(this)">${taskText}</span>
+    <button onclick="deleteTask(this)">Delete</button>
+  `;
+  document.getElementById("taskList").appendChild(li);
+  input.value = "";
+}
+
+function deleteTask(button) {
+  button.parentElement.remove();
+}
+
+function toggleComplete(span) {
+  span.parentElement.classList.toggle("completed");
+}
 
 ```
 
